@@ -12,6 +12,8 @@ namespace RAD
             {
                 Console.WriteLine(tuple);
             }
+
+            Console.WriteLine(HashFunctions.MultiplyShift(322));
         }
     }
 }
