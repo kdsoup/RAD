@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RAD
 {
@@ -11,9 +12,10 @@ namespace RAD
             foreach (var tuple in StreamGenerator.CreateStream(9, 10))
             {
                 Console.WriteLine(tuple);
+                Console.WriteLine(HashFunctions.MultiplyShift(tuple.Item1));
             }
 
-            Console.WriteLine(HashFunctions.MultiplyShift(322));
+            Console.WriteLine(BigInteger.Pow(2, 89) - 1);
         }
     }
 }

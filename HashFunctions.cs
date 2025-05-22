@@ -1,3 +1,4 @@
+using System.Numerics;
 
 public static class HashFunctions
 {
@@ -13,7 +14,16 @@ public static class HashFunctions
 
     public static ulong MulitplyModShift(ulong x) 
     {
-        return 0;
+        int q = 89;
+        BigInteger p = BigInteger.Pow(2, q) - 1;
+        BigInteger a = BigInteger.Parse("21852482231921622378");
+        BigInteger b = BigInteger.Parse("72212331521915716217");
+        int l = 18;
+        BigInteger m = BigInteger.Pow(2, l);
+        BigInteger y = 1;
+        y = (y & p) + (y >> q);
+        if (y >= p) { y -= p; }
+        return (ulong) y;
     }
 
 }
