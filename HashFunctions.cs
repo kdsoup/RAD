@@ -12,7 +12,7 @@ public static class HashFunctions
         return (a * x) >> (64 - l);
     }
 
-    public static ulong MulitplyModShift(ulong x) 
+    public static ulong MulitplyModShift(ulong x)
     {
         int q = 89;
         int l = 18;
@@ -27,8 +27,10 @@ public static class HashFunctions
         y = (xt & p) + (xt >> q);
         if (y >= p) { y -= p; }
         y &= m - 1;
-        
+
         return (ulong)y;
     }
+    
+    
 
 }
