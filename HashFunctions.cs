@@ -17,12 +17,14 @@ public static class HashFunctions
         int q = 89;
         int l = 18;
         BigInteger y;
+        BigInteger xt;
         BigInteger p = BigInteger.Pow(2, q) - 1;
         BigInteger a = BigInteger.Parse("21852482231921622378");
         BigInteger b = BigInteger.Parse("72212331521915716217");
         BigInteger m = BigInteger.Pow(2, l);
 
-        y = ((a*x+b) & p) + (x >> q);
+        xt = a * x + b;
+        y = (xt & p) + (xt >> q);
         if (y >= p) { y -= p; }
         y &= m - 1;
         
