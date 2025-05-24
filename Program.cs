@@ -15,7 +15,7 @@ namespace RAD
                 Console.WriteLine(HashFunctions.MultiplyShift(tuple.Item1));
             }
 
-            Console.WriteLine(BigInteger.Pow(2, 89) - 1);
+            Console.WriteLine(HashFunctions.MulitplyModShift(234));
         }
     }
 }
