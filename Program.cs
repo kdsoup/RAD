@@ -20,7 +20,8 @@ namespace RAD
             // HashFunctions.GetRunningTimes();
 
             // Opgave 3
-            Console.WriteLine(CountSketch.FourUniversalHashFunction(30));
+            // CountSketch.TestBasicCountSketch();
+            
 
         }
     }
