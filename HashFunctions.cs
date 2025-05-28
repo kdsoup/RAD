@@ -1,4 +1,5 @@
 using System.Numerics;
+using RAD;
 
 public static class HashFunctions
 {
@@ -28,9 +29,33 @@ public static class HashFunctions
         if (y >= p) { y -= p; }
         y &= m - 1;
 
-        return (ulong)y;
+        return (ulong) y;
     }
-    
-    
+
+    public static void GetRunningTimes()
+    {
+        // Opgave 1.c
+        IEnumerable<Tuple<ulong, int>> stream = StreamGenerator.CreateStream(9000, 10000);
+
+        DateTime start;
+        DateTime end;
+        TimeSpan ts;
+
+        start = DateTime.Now;
+        var sumA = stream.Aggregate(new BigInteger(0), (accumulator, current) =>
+            accumulator + HashFunctions.MultiplyShift(current.Item1)
+        );
+        end = DateTime.Now;
+        ts = (end - start);
+        Console.WriteLine($"Multiply-shift:\n Sum: {sumA}\n Running-time: {ts.TotalMilliseconds} ms");
+
+        start = DateTime.Now;
+        var sumB = stream.Aggregate(new BigInteger(0), (accumulator, current) =>
+            accumulator + HashFunctions.MulitplyModShift(current.Item1)
+        );
+        end = DateTime.Now;
+        ts = (end - start);
+        Console.WriteLine($"Multiply-mod-shift:\n Sum: {sumB}\n Running-time: {ts.Milliseconds} ms");
+}
 
 }
