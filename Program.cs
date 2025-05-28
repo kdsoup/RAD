@@ -17,7 +17,10 @@ namespace RAD
             // }
 
             // Opgave 1.c
-            HashFunctions.GetRunningTimes();
+            // HashFunctions.GetRunningTimes();
+
+            // Opgave 3
+            Console.WriteLine(CountSketch.FourUniversalHashFunction(30));
 
         }
     }
