@@ -4,19 +4,17 @@ using RAD;
 public static class HashFunctions
 {
 
-    public static ulong MultiplyShift(ulong x)
+    public static ulong MultiplyShift(ulong x, int l)
     {
         // h(x) = (a*x)>>(64 − l)
         // rand bit from https://www.random.org/bytes/
         ulong a = 0b_01110111_01101000_11001101_00111001_01110111_11110001_01110001_00100111UL;
-        int l = 59;
         return (a * x) >> (64 - l);
     }
 
-    public static ulong MulitplyModShift(ulong x)
+    public static ulong MulitplyModShift(ulong x, int l)
     {
         int q = 89;
-        int l = 59;
         BigInteger y;
         BigInteger xt;
         BigInteger p = BigInteger.Pow(2, q) - 1;
@@ -43,7 +41,7 @@ public static class HashFunctions
 
         start = DateTime.Now;
         var sumA = stream.Aggregate(new BigInteger(0), (accumulator, current) =>
-            accumulator + HashFunctions.MultiplyShift(current.Item1)
+            accumulator + HashFunctions.MultiplyShift(current.Item1, 23)
         );
         end = DateTime.Now;
         ts = (end - start);
@@ -51,7 +49,7 @@ public static class HashFunctions
 
         start = DateTime.Now;
         var sumB = stream.Aggregate(new BigInteger(0), (accumulator, current) =>
-            accumulator + HashFunctions.MulitplyModShift(current.Item1)
+            accumulator + HashFunctions.MulitplyModShift(current.Item1, 23)
         );
         end = DateTime.Now;
         ts = (end - start);
