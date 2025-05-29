@@ -35,7 +35,7 @@ public static class HashFunctions
     public static void GetRunningTimes()
     {
         // Opgave 1.c
-        IEnumerable<Tuple<ulong, int>> stream = StreamGenerator.CreateStream(9000, 10000);
+        IEnumerable<Tuple<ulong, int>> stream = StreamGenerator.CreateStream(9000, 34);
 
         DateTime start;
         DateTime end;
