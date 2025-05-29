@@ -16,7 +16,7 @@ public static class HashFunctions
     public static ulong MulitplyModShift(ulong x)
     {
         int q = 89;
-        int l = 18;
+        int l = 59;
         BigInteger y;
         BigInteger xt;
         BigInteger p = BigInteger.Pow(2, q) - 1;
