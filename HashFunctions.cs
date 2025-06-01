@@ -32,6 +32,7 @@ public static class HashFunctions
         return (ulong) y;
     }
 
+
     public static void GetRunningTimes()
     {
         // Opgave 1.c
