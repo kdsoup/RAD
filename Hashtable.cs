@@ -5,7 +5,6 @@ namespace RAD
     public class HashTable
     {
         private List<Tuple<ulong, int>>[] hashtable;
-        private int l;
         private int size;
         private ulong mask; //Bitmask
         private Func<ulong, ulong> hashFunction;
@@ -13,7 +12,6 @@ namespace RAD
         public HashTable(int l, Func<ulong, ulong> hashFunction)
         {
             hashtable = new List<Tuple<ulong, int>>[0];
-            this.l = l;
             this.size = 1 << l; //2^l
             this.mask = (ulong)(size - 1); //Bitmask size
             this.hashFunction = hashFunction;
