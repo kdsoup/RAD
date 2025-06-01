@@ -4,7 +4,7 @@ namespace RAD
 {
     public class HashTable
     {
-        private Tuple<ulong, int>[] hashtable;
+        private List<Tuple<ulong, int>>[] hashtable;
         private int l;
         private int size;
         private ulong mask; //Bitmask
@@ -12,10 +12,11 @@ namespace RAD
 
         public HashTable(int l, Func<ulong, ulong> hashFunction)
         {
-            hashtable = new Tuple<ulong, int>[0];
+            hashtable = new List<Tuple<ulong, int>>[0];
             this.l = l;
             this.size = 1 << l; //2^l
-            this.mask = (size << l) - 1; //Bitmask size
+            this.mask = (ulong)(size - 1); //Bitmask size
+            this.hashFunction = hashFunction;
 
             hashtable = new List<Tuple<ulong, int>>[size];
             //Initialize the hashtable with empty tuples
@@ -35,10 +36,10 @@ namespace RAD
         public int Get(ulong x)
         {
             int index = Hash(x);
-            foreach (var value in table[index])
+            foreach (var value in hashtable[index])
             {
-                if (value.Key == x)
-                    return value.Value;
+                if (value.Item1 == x)
+                    return value.Item2;
             }
             return 0;
         }
@@ -47,42 +48,39 @@ namespace RAD
         public void Set(ulong x, int v)
         {
             int index = Hash(x);
-            for (int i = 0; i < table[index].Count; i++)
+            for (int i = 0; i < hashtable[index].Count; i++)
             {
-                if (table[index][i].Key == x)
+                if (hashtable[index][i].Item1 == x)
                 {
-                    table[index][i] = new KeyValuePair<ulong, int>(x, v);
+                    hashtable[index][i] = new Tuple<ulong, int>(x, v);
                     return;
                 }
             }
-            table[index].Add(new KeyValuePair<ulong, int>(x, v));
+            hashtable[index].Add(new Tuple<ulong, int>(x, v));
         }
 
         //Increment method increments the value associated with the given key (x) by the specified amount (d).
         public void Increment(ulong x, int d)
         {
             int index = Hash(x);
-            for (int i = 0; i < table[index].Count; i++)
+            for (int i = 0; i < hashtable[index].Count; i++)
             {
-                if (table[index][i].Key == x)
+                if (hashtable[index][i].Item1 == x)
                 {
-                    int newVal = table[index][i].Value + d;
-                    table[index][i] = new KeyValuePair<ulong, int>(x, newVal);
+                    int newVal = hashtable[index][i].Item2 + d;
+                    hashtable[index][i] = new Tuple<ulong, int>(x, newVal);
                     return;
                 }
             }
-            table[index].Add(new KeyValuePair<ulong, int>(x, d));
+            hashtable[index].Add(new Tuple<ulong, int>(x, d));
         }
         
-        //Load data in to hashtable. True for increment, false for accumulation.
-        public static void LoadData(HashTableChaining table, List<Tuple<ulong, int>> data, bool increment = false)
+        //Load data in to hashtable. True for increment, false for replacement.
+        public static void LoadData(HashTable table, List<Tuple<ulong, int>> data)
         {
             foreach (var entry in data)
             { 
-                if (increment)
                     table.Increment(entry.Item1, entry.Item2);
-                else
-                    table.Set(entry.Item1, entry.Item2);
             }
         }
     }
