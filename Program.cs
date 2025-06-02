@@ -55,6 +55,11 @@ namespace RAD
             BigInteger secondMoment = CountSketch.SecondMomentEstimation(countSketch);
             Console.WriteLine("Second Moment Estimate: " + secondMoment);
 
+            // Console.WriteLine("Test 7: Experiment with implementation");
+            Task7Runner.RunTask7();
+
+            // Console.WriteLine("Test 8: Experiment with implementation");
+            Task8Runner.RunTask8();
         }
     }
 }
