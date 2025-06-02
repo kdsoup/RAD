@@ -65,6 +65,12 @@ public static class CountSketch
         return sx * CountSketch[(int)hx];
     }
 
+    public static BigInteger SecondMomentEstimation(BigInteger[] countSketch)
+    {
+        
+        return countSketch.Aggregate(BigInteger.Parse("0"), (acc, x) => acc + BigInteger.Pow(x,2));
+    }
+
     public static void TestBasicCountSketch()
     {
         var stream = StreamGenerator.CreateStream(10, 1);
