@@ -7,7 +7,6 @@ namespace RAD
 {
     public class Program
     {
-        // ChatGPT generet dummy eksempel der blot er indsat for at få programmet til at køre
         public static void Main(string[] args)
         {
             // foreach (var tuple in StreamGenerator.CreateStream(9, 10))
@@ -18,9 +17,6 @@ namespace RAD
 
             // Opgave 1.c
             //HashFunctions.GetRunningTimes();
-
-            // Opgave 3
-            // CountSketch.TestBasicCountSketch();
 
             //Hash table test
             /*
@@ -52,6 +48,13 @@ namespace RAD
             Console.WriteLine(hashTabletable.Get(1UL) == 35 ? "PASS" : "FAIL");
             Console.WriteLine(hashTabletable.Get(2UL) == 25 ? "PASS" : "FAIL");
             */
+
+            // Count Sketch
+            IEnumerable<Tuple<ulong, int>> stream = StreamGenerator.CreateStream(100, 23);
+            BigInteger[] countSketch = CountSketch.BasicCountSketch(stream);
+            BigInteger secondMoment = CountSketch.SecondMomentEstimation(countSketch);
+            Console.WriteLine("Second Moment Estimate: " + secondMoment);
+
         }
     }
 }
