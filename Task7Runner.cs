@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.IO;
+
 using RAD;
 
 namespace RAD
@@ -49,7 +51,6 @@ namespace RAD
                 estimates.Add(X);
             }
 
-            // Sort and print estimates
             estimates.Sort();
             Console.WriteLine("\nSorted Estimates:");
             for (int i = 0; i < estimates.Count; i++)
@@ -57,7 +58,8 @@ namespace RAD
                 Console.WriteLine($"{i + 1}, {estimates[i]}");
             }
 
-            // Compute Mean Square Error
+            File.WriteAllText("task7_estimates.csv", string.Join(",", estimates));
+
             BigInteger mse = 0;
             foreach (var est in estimates)
             {
@@ -66,7 +68,6 @@ namespace RAD
             mse /= numExperiments;
             Console.WriteLine($"\nMean Square Error (MSE): {mse}");
 
-            // Compute medians of 9 groups
             Console.WriteLine("\nMedian of 9 Groups:");
             List<BigInteger> medians = new List<BigInteger>();
             for (int group = 0; group < 9; group++)
@@ -81,6 +82,8 @@ namespace RAD
             {
                 Console.WriteLine($"{i + 1}, {medians[i]}");
             }
+
+            File.WriteAllText("task7_medians.csv", string.Join(",", medians));
 
             Console.WriteLine($"\nExact S (line reference): {exactS}");
         }
