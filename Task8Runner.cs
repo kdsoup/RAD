@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.IO;
+
 using RAD;
 
 namespace RAD
@@ -45,6 +47,7 @@ namespace RAD
             Console.WriteLine($"Chaining runtime: {stopwatch.ElapsedMilliseconds} ms");
 
             // For each m value
+            var lines = new List<string> { "m,mse,runtime" };
             foreach (var m in mValues)
             {
                 Console.WriteLine($"\n=== Results for m = {m} ===");
@@ -69,13 +72,19 @@ namespace RAD
                 }
                 stopwatch.Stop();
 
-                // Compute MSE
                 BigInteger mse = 0;
                 foreach (var est in estimates)
                 {
                     mse += BigInteger.Pow(est - exactS, 2);
                 }
                 mse /= numExperiments;
+
+                Console.WriteLine($"Mean Square Error (MSE): {mse}");
+                Console.WriteLine($"Count-Sketch runtime for m = {m}: {stopwatch.ElapsedMilliseconds} ms");
+
+                lines.Add($"{m},{mse},{stopwatch.ElapsedMilliseconds}");
+
+                File.WriteAllLines("task8_results.csv", lines);
 
                 Console.WriteLine($"Mean Square Error (MSE): {mse}");
                 Console.WriteLine($"Count-Sketch runtime for m = {m}: {stopwatch.ElapsedMilliseconds} ms");
