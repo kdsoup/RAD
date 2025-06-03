@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Transactions;
+using System.Diagnostics;
+using System.Linq;
 
 namespace RAD
 {
@@ -9,6 +11,46 @@ namespace RAD
     {
         public static void Main(string[] args)
         {
+            int n = 300000;
+            int lmin = 10;
+            int lmax = 18;
+
+            for (int l = lmin; l <= lmax; l += 2 )
+            {
+            var stream = StreamGenerator.CreateStream(n, l).ToList();
+
+            foreach (var (name, hashFunc) in new[]
+            {
+                    ("MultiplyShift", (Func<ulong, ulong>)HashFunctions.MultiplyShift),
+                    ("MultiplyMod",   (Func<ulong, ulong>)HashFunctions.MultiplyModShift)
+                })
+                {
+                    try
+                    {
+                        var sw = Stopwatch.StartNew();
+                        long sum = SquareSum.CalcSquareSum(stream, l, hashFunc);
+                        sw.Stop();
+
+                        Console.WriteLine($"{l}\t{name}\t\t{sw.ElapsedMilliseconds}\t\t{sum}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"{l}\t{name}\t\tFAILED\t\t{ex.Message}");
+                        break;
+                    }
+                }
+            }
+            
+          /*  
+            // Use either MultiplyShift or MultiplyMod
+            var resultShift = SquareSum.CalcSquareSum(stream, l, HashFunctions.MultiplyShift);
+            Console.WriteLine($"Kvadratsum med MultiplyShift (l={l}): {resultShift}");
+
+            // You must re-generate the stream since IEnumerable is consumed
+            stream = StreamGenerator.CreateStream(n, l);
+            var resultMod = SquareSum.CalcSquareSum(stream, l, HashFunctions.MulitplyModShift);
+            Console.WriteLine($"Kvadratsum med MultiplyMod (l={l}):    {resultMod}");
+*/
             // foreach (var tuple in StreamGenerator.CreateStream(9, 10))
             // {
             //     Console.WriteLine(tuple);
@@ -48,7 +90,7 @@ namespace RAD
             Console.WriteLine(hashTabletable.Get(1UL) == 35 ? "PASS" : "FAIL");
             Console.WriteLine(hashTabletable.Get(2UL) == 25 ? "PASS" : "FAIL");
             */
-
+/*
             // Count Sketch
             IEnumerable<Tuple<ulong, int>> stream = StreamGenerator.CreateStream(100, 23);
             BigInteger[] countSketch = CountSketch.BasicCountSketch(stream);
@@ -60,6 +102,7 @@ namespace RAD
 
             // Console.WriteLine("Test 8: Experiment with implementation");
             Task8Runner.RunTask8();
+            */
         }
     }
 }

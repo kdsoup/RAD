@@ -13,7 +13,7 @@ public static class HashFunctions
         return (a * x) >> (64 - l);
     }
 
-    public static ulong MulitplyModShift(ulong x)
+    public static ulong MultiplyModShift(ulong x)
     {
         int q = 89;
         int l = 59;
@@ -52,7 +52,7 @@ public static class HashFunctions
 
         start = DateTime.Now;
         var sumB = stream.Aggregate(new BigInteger(0), (accumulator, current) =>
-            accumulator + HashFunctions.MulitplyModShift(current.Item1)
+            accumulator + HashFunctions.MultiplyModShift(current.Item1)
         );
         end = DateTime.Now;
         ts = (end - start);

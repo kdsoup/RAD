@@ -74,12 +74,26 @@ namespace RAD
         }
         
         //Load data in to hashtable. True for increment, false for replacement.
-        public static void LoadData(HashTable table, List<Tuple<ulong, int>> data)
+        public static void LoadData(HashTable table, IEnumerable<Tuple<ulong, int>> data)
         {
             foreach (var entry in data)
             { 
                     table.Increment(entry.Item1, entry.Item2);
             }
         }
+
+        public IEnumerable<(ulong key, int value)> GetAllKeys()
+        {
+            foreach (var bucket in hashtable)
+            {
+                foreach (var keyvalue in bucket)
+                {
+                    yield return (keyvalue.Item1, keyvalue.Item2);
+                }
+            }
+        }
+
+
+
     }
 }
